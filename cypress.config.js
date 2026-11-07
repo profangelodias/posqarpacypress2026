@@ -1,18 +1,25 @@
 const { defineConfig } = require("cypress");
-const cucumber = require("cypress-cucumber-preprocessor").default;
+const createBundler = require("@bahmutov/cypress-esbuild-preprocessor");
+const { addCucumberPreprocessorPlugin } = require("@badeball/cypress-cucumber-preprocessor");
+const { createEsbuildPlugin } = require("@badeball/cypress-cucumber-preprocessor/esbuild");
 
 module.exports = defineConfig({
-  e2e: {  
+  e2e: {
     specPattern: "**/*.feature",
-    setupNodeEvents(on, config) {
-      on("file:preprocessor", cucumber());
-      
+    async setupNodeEvents(on, config) {
       const version = config.env.version || 'qa'
       config.env = require(`./cypress/config/${version}.json`);
       config.baseUrl = config.env.baseUrl;
-      return config;
 
-      // implement node event listeners here
+      await addCucumberPreprocessorPlugin(on, config);
+      on(
+        "file:preprocessor",
+        createBundler({
+          plugins: [createEsbuildPlugin(config)],
+        })
+      );
+
+      return config;
     },
   },
 });
