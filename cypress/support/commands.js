@@ -10,7 +10,22 @@
 //
 //
 // -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
+import loginPage from './pages/LoginPage.js';
+
+Cypress.Commands.add('login', (perfil) => {
+	return cy.fixture('usuarios').then((massa) => {
+		const usuario = massa[perfil];
+		loginPage.acessarPagina();
+		loginPage.preencherCredenciais(usuario.usuario, usuario.senha);
+		loginPage.clicarEntrar();
+	});
+});
+
+Cypress.Commands.add('login_valido', () => {
+	loginPage.acessarPagina();
+	loginPage.preencherCredenciais("standard_user", "secret_sauce");
+	loginPage.clicarEntrar();
+});
 //
 //
 // -- This is a child command --

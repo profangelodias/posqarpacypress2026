@@ -1,7 +1,8 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 import LoginPage from "../../support/pages/LoginPage";
 import ProductsPage from "../../support/pages/ProductsPage";
-import AuthActions from "../../support/actions/authActions";
+// import AuthActions from "../../support/actions/authActions";
+
 Given("que estou logado na vitrine de produtos sem padrao com o perfil {string}", (perfil) => {
   // DOR 1: Repetindo todos os cy.get() de login que já tínhamos feito no outro arquivo!
   cy.visit("/");
@@ -14,22 +15,10 @@ Given("que estou logado na vitrine de produtos sem padrao com o perfil {string}"
 
 
 Given("que estou logado na vitrine de produtos com o perfil {string}", (perfil) => {
-  
-  // =========================================================================
-  // OPÇÃO 1: USANDO APENAS PAGE OBJECTS (Sem precisar de App Actions)
-  // =========================================================================
-  /*
-  LoginPage.acessarPagina();
-  cy.fixture("usuarios").then((massa) => {
-    LoginPage.preencherCredenciais(massa[perfil].usuario, massa[perfil].senha);
-    LoginPage.clicarEntrar();
-  });
-  */
-
-  // =========================================================================
-  // OPÇÃO 2: USANDO APP ACTIONS (Mais enxuto para pré-condições de negócio!)
-  // =========================================================================
-  AuthActions.realizarLoginRapidoComFixture(perfil);
+ 
+//   AuthActions.realizarLoginRapidoComFixture(perfil);
+    // cy.login(perfil); // Usando o comando customizado 'login' definido em cypress/support/commands.js
+    cy.login_valido(); // Usando o comando customizado 'login_valido' definido em cypress/support/commands.js
 });
 
 // Nos passos de interação e validação da tela, o Page Object brilha!

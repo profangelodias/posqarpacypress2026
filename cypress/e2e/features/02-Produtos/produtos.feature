@@ -8,6 +8,6 @@ Funcionalidade: Vitrine de Produtos
             Quando adiciono o produto "Sauce Labs Backpack" ao carrinho
             Então o badge do carrinho deve mostrar "1"
 
-        Cenário: Remover um produto adicionado direto na vitrine
+        Cenário: Remover um produto adicionado direto da vitrine
 
         Cenário: Ordenar produtos do menor para o maior preço
