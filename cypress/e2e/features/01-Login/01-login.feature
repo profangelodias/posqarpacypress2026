@@ -27,4 +27,8 @@ Funcionalidade: Login no SauceDemo
       | cenario           | usuario         | senha        | mensagem_esperada                                                       |
       | Usuário bloqueado | locked_out_user | secret_sauce | Epic sadface: Sorry, this user has been locked out.                     |
       | Senha incorreta   | standard_user   | senha_errada | Epic sadface: Username and password do not match any user in this service |
-      
+
+    
+    Cenário: Login com usuário válido usando Fixture
+        Quando realizo login usando o perfil "valido" da fixture
+        Então devo ser redirecionado para a vitrine de produtos

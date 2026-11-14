@@ -20,3 +20,12 @@ Then("devo ver a mensagem de erro {string}", (mensagemEsperada) => {
     .should("be.visible")
     .and("contain.text", mensagemEsperada);
 });
+
+When("realizo login usando o perfil {string} da fixture", (perfil) => {
+    cy.fixture("usuarios").then((massa) => {
+        const usuario = massa[perfil];
+        cy.get("#user-name").type(usuario.usuario);
+        cy.get("#password").type(usuario.senha);
+        cy.get("#login-button").click();
+    });
+});
