@@ -18,6 +18,15 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^28.0.1",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.8",
     "cypress": "^16.2.0"
+  },
+  "cypress-cucumber-preprocessor": {
+    "e2e": {
+      "stepDefinitions": [
+        "cypress/steps/[filepath]Steps.js"
+      ]
+    }
   }
 }
