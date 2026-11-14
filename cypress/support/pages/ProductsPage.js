@@ -24,17 +24,13 @@ class ProductsPage {
     cy.get(this.elements.badgeCarrinho).should("be.visible").and("have.text", quantidadeEsperada);
   }
 
-  validarCarrinhoVazio() {
-    cy.get(this.elements.badgeCarrinho).should("not.exist");
-  }
-
   validarPrimeiroProdutoDaLista(nomeEsperado) {
     cy.get(this.elements.nomeProduto).first().should("have.text", nomeEsperado);
   }
 
-//ETAPA 3
-  acessarCarrinho() { 
-    cy.get('[data-test="shopping-cart-link"]').click(); }
+  acessarCarrinho() {
+    cy.get(this.elements.linkCarrinho).click();
+  }
 }
 
 export default new ProductsPage();

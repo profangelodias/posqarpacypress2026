@@ -6,7 +6,6 @@ class CartPage {
     tituloPagina: '[data-test="title"]',
     itemCarrinho: '[data-test="inventory-item"]',
     nomeItem: '[data-test="inventory-item-name"]',
-    botaoContinueShopping: '[data-test="continue-shopping"]',
     botaoCheckout: '[data-test="checkout"]'
   };
 
@@ -32,10 +31,6 @@ class CartPage {
 
   validarQuantidadeDeItensListados(quantidadeEsperada) {
     cy.get(this.elements.itemCarrinho).should("have.length", quantidadeEsperada);
-  }
-
-  clicarContinuarComprando() {
-    cy.get(this.elements.botaoContinueShopping).click();
   }
 
   clicarIrParaCheckout() {

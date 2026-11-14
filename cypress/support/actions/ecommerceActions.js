@@ -2,40 +2,24 @@ import LoginPage from "../pages/LoginPage";
 import ProductsPage from "../pages/ProductsPage";
 
 class ecommerceActions {
-  
-  /**
-   * App Action 1: Orquestra a LoginPage + Fixture + ProductsPage
-   * Representa o processo de negócio completo de entrar na loja!
-   */
-  realizarLoginComPerfil(perfil) {
+  realizarLoginComPerfilFixture(perfil) {
     LoginPage.acessarPagina();
-    
+
     cy.fixture("usuarios").then((massa) => {
-      const { usuario, senha } = massa[perfil];
-      
-      // Usa as "ruas" do Mapa (LoginPage) para fazer a rota!
-      LoginPage.preencherUsuario(usuario);
-      LoginPage.preencherSenha(senha);
+      const dados = massa[perfil];
+      LoginPage.preencherUsuario(dados.usuario);
+      LoginPage.preencherSenha(dados.senha);
       LoginPage.clicarEntrar();
     });
+  }
 
-    // Garante que a rota terminou na vitrine usando a ProductsPage
+  logarEValidarVitrine(perfil) {
+    this.realizarLoginComPerfilFixture(perfil);
     ProductsPage.validarVitrineVisivel();
   }
 
-  /**
-   * App Action 2: Fluxo de negócio para adicionar e remover na sequência
-   */
-  adicionarERemoverProdutoDaVitrine(nomeProduto) {
-    ProductsPage.clicarBotaoDoProduto(nomeProduto); // Adiciona (Add to cart)
-    ProductsPage.clicarBotaoDoProduto(nomeProduto); // Remove (Remove)
-  }
-
-  /**
-   * App Action 3: Fluxo de adicionar múltiplos itens de uma vez
-   */
-  adicionarMultiplosItensAoCarrinho(listaProdutos) {
-    listaProdutos.forEach((produto) => {
+  adicionarListaDeProdutos(listaDeProdutos) {
+    listaDeProdutos.forEach((produto) => {
       ProductsPage.clicarBotaoDoProduto(produto);
     });
   }

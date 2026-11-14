@@ -28,18 +28,13 @@ import EcommerceActions from "./actions/ecommerceActions";
 import ProductsPage from "./pages/ProductsPage";
 import CartPage from "./pages/CartPage";
 
-/**
- * Custom Command Global: cy.acessarCarrinhoComProdutos(perfil, arrayDeProdutos)
- * Faz o login, adiciona qualquer lista de produtos e já abre a tela do carrinho!
- * Não precisa de 'import' nos arquivos .steps.js!
- */
-Cypress.Commands.add("acessarCarrinhoComProdutos", (perfil, listaDeProdutos) => {
-  EcommerceActions.realizarLoginComPerfil(perfil);
-  
-  listaDeProdutos.forEach((produto) => {
-    ProductsPage.clicarBotaoDoProduto(produto);
-  });
+Cypress.Commands.add("loginComFixture", (perfil) => {
+  EcommerceActions.logarEValidarVitrine(perfil);
+});
 
+Cypress.Commands.add("acessarCarrinhoComProdutos", (perfil, listaDeProdutos) => {
+  EcommerceActions.logarEValidarVitrine(perfil);
+  EcommerceActions.adicionarListaDeProdutos(listaDeProdutos);
   ProductsPage.acessarCarrinho();
   CartPage.validarTelaCarrinhoVisivel();
 });

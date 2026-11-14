@@ -10,21 +10,28 @@ class LoginPage {
     cy.visit("/");
   }
 
-  preencherCredenciais(usuario, senha) {
-    cy.get(this.elements.inputUsuario).clear().type(usuario);
-    cy.get(this.elements.inputSenha).clear().type(senha);
-  }
-
   preencherUsuario(usuario) {
-    cy.get(this.elements.inputUsuario).clear().type(usuario);
+    cy.get(this.elements.inputUsuario).clear();
+    if (usuario) {
+      cy.get(this.elements.inputUsuario).type(usuario);
+    }
   }
 
   preencherSenha(senha) {
-    cy.get(this.elements.inputSenha).clear().type(senha);
+    cy.get(this.elements.inputSenha).clear();
+    if (senha) {
+      cy.get(this.elements.inputSenha).type(senha);
+    }
   }
 
   clicarEntrar() {
     cy.get(this.elements.botaoLogin).click();
+  }
+
+  validarMensagemDeErro(mensagemEsperada) {
+    cy.get(this.elements.mensagemErro)
+      .should("be.visible")
+      .and("contain.text", mensagemEsperada);
   }
 }
 

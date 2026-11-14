@@ -6,7 +6,7 @@ const { faker } = require("@faker-js/faker");
 
 module.exports = defineConfig({
   e2e: {
-    specPattern: "**/*.feature",
+    specPattern: "cypress/e2e/features/**/*.feature",
     async setupNodeEvents(on, config) {
       const version = config.env.version || "qa";
       const envDoComando = config.env;
@@ -36,67 +36,6 @@ module.exports = defineConfig({
             cidade: dados.localidade || "João Pessoa",
             bairro: dados.bairro || "Manaíra",
             uf: dados.uf || "PB"
-          };
-        },
-
-        // Versão com validação explícita da resposta do serviço.
-        async buscarEnderecoCepCompleto(cep) {
-          // Remove traços caso passe "58038-000"
-          if (typeof cep !== "string") {
-            throw new Error("CEP inválido: informe o CEP como texto.");
-          }
-
-          // Aceita CEP com ou sem hífen, mas exige exatamente oito dígitos.
-          const cepLimpo = cep.replace(/\D/g, "");
-          if (!/^\d{8}$/.test(cepLimpo)) {
-            throw new Error(`CEP inválido: "${cep}" deve conter exatamente 8 dígitos.`);
-          }
-
-          let response;
-          try {
-            response = await fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`);
-          } catch (error) {
-            throw new Error(
-              `Não foi possível consultar o ViaCEP para o CEP ${cepLimpo}. ` +
-              `Verifique a conexão com a internet. Detalhe: ${error.message}`
-            );
-          }
-
-          if (!response.ok) {
-            throw new Error(
-              `O ViaCEP respondeu com HTTP ${response.status} ao consultar o CEP ${cepLimpo}.`
-            );
-          }
-
-          let dados;
-          try {
-            dados = await response.json();
-          } catch (error) {
-            throw new Error(
-              `O ViaCEP retornou uma resposta inválida para o CEP ${cepLimpo}. ` +
-              `Detalhe: ${error.message}`
-            );
-          }
-
-          if (!dados || typeof dados !== "object" || Array.isArray(dados)) {
-            throw new Error(`O ViaCEP retornou dados inválidos para o CEP ${cepLimpo}.`);
-          }
-
-          if (dados.erro) {
-            throw new Error(`O ViaCEP não encontrou o CEP ${cepLimpo}.`);
-          }
-
-          if (!dados.cep || !dados.localidade || !dados.uf) {
-            throw new Error(`A resposta do ViaCEP está incompleta para o CEP ${cepLimpo}.`);
-          }
-
-          // Retorna um objeto limpo para o Cypress usar no teste!
-          // Evita valores padrao inventados, que poderiam esconder uma resposta incompleta.
-          return {
-            cepFormatado: dados.cep,
-            cidade: dados.localidade,
-            bairro: dados.bairro,
-            uf: dados.uf
           };
         },
 

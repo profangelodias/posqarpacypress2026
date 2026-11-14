@@ -4,11 +4,8 @@ class CheckoutPage {
     inputSobrenome: '[data-test="lastName"]',
     inputCep: '[data-test="postalCode"]',
     botaoContinue: '[data-test="continue"]',
-    botaoCancel: '[data-test="cancel"]',
     botaoFinish: '[data-test="finish"]',
-    mensagemErro: '[data-test="error"]',
-    cabecalhoSucesso: '[data-test="complete-header"]',
-    tituloPagina: '[data-test="title"]'
+    cabecalhoSucesso: '[data-test="complete-header"]'
   };
 
   preencherNomeESobrenome(nome, sobrenome) {
@@ -29,18 +26,8 @@ class CheckoutPage {
     cy.get(this.elements.botaoContinue).click();
   }
 
-  clicarCancel() {
-    cy.get(this.elements.botaoCancel).click();
-  }
-
   clicarFinish() {
     cy.get(this.elements.botaoFinish).click();
-  }
-
-  validarMensagemErro(erroEsperado) {
-    cy.get(this.elements.mensagemErro)
-      .should("be.visible")
-      .and("contain.text", erroEsperado);
   }
 
   validarPedidoConcluidoComSucesso(mensagemEsperada) {
